@@ -1,0 +1,184 @@
+后台地址:
+外网:https://houtai.sdyh.top/zcjy
+账号:admin@foxmail.com
+密码:zcjy123
+
+1.基本通用接口
+
+1.1 测试登录
+请求地址:https://houtai.sdyh.top/api/test_login
+请求参数:id=1(必须要)
+返回参数:token
+
+1.2 线上登录
+
+1.3 获取个人基本信息 需要token
+请求地址:https://houtai.sdyh.top/api/me
+请求参数:token 
+返回参数:user用户基本信息 packages套餐记录 seelogs查看浏览记录
+
+[#新更新]1.4 内容信息管理
+
+[#新更新]1.4.1 获取首页横幅 
+请求地址:https://houtai.sdyh.top/api/banners/{slug}
+请求参数:slug=index(必须要)
+返回参数:成功数据
+
+[#新更新]1.4.2 获取通知消息 
+请求地址:https://houtai.sdyh.top/api/messages
+请求参数:skip,take选传
+返回参数:成功数据
+
+
+[#新更新]1.4.3 获取热门发现文章
+请求地址:https://houtai.sdyh.top/api/hot_posts
+请求参数:skip,take选传
+返回参数:成功数据
+
+[#新更新]1.4.4 获取热门发现文章
+请求地址:https://houtai.sdyh.top/api/hot_posts/{post_id}
+请求参数:post_id 文章id
+返回参数:成功数据
+
+[#新更新]1.4.5 获取短信验证码
+请求地址:https://houtai.sdyh.top/api/send_code
+请求参数:mobile 手机号
+返回参数:成功提示
+
+1.5 接口安全
+[#新更新]1.5.1 获取接口key 需要token
+请求地址:https://houtai.sdyh.top/api/get_key
+请求参数:token
+返回参数:key密钥 后面需要用户认证的接口加上key请求参数
+
+[#新更新]1.6 微信分享参数
+请求地址:https://houtai.sdyh.top/api/weixin_share
+请求参数:
+返回参数:配置js参数
+
+[#新更新]1.7 微信客服信息
+请求地址:https://houtai.sdyh.top/api/weixin_ser
+请求参数:
+返回参数:客服信息,weixin_number客服微信号 weixin_erweima客服微信二维码
+
+[#新更新]1.8 通知消息详情
+请求地址:https://houtai.sdyh.top/api/message/{message_id}
+请求参数:message_id 消息id
+返回参数:消息详情
+
+
+2.前端显示及使用接口
+
+[#新更新]2.1 完善信息注册会员 需要token
+请求地址:https://houtai.sdyh.top/api/reg_member
+请求参数:mobile 手机号(必须要) job职位名称 (必须要)  code验证码(必须要) 
+返回参数:成功提示
+
+2.2 查看题目(每个会员3次免费查看 查看一次减一次) 需要token
+请求地址:https://houtai.sdyh.top/api/see
+请求参数:sec_id 章节id
+返回参数:成功提示 及剩余次数
+
+3 绑定手机号和选择职位后才能使用 查看调用 2.1 接口 需要token
+
+[#新更新]3.1 获取所有职位 需要token
+请求地址:https://houtai.sdyh.top/api/get_jobs
+请求参数: 
+返回参数:成功数据 组卷的话根据can_use=1判断可用不可用
+
+3.2 获取职位下的科目 需要token
+请求地址:https://houtai.sdyh.top/api/get_subject/{job_id}
+请求参数:{job_id} 职位id(必须要)
+返回参数:成功数据
+
+3.3 获取科目下的章节 需要token
+请求地址:https://houtai.sdyh.top/api/get_sections/{subject_id}
+请求参数:{subject_id} 科目id(必须要)
+返回参数:成功数据 
+参数解释:topic_count是当前章节题目总数 get_num是取多少题 min_sort是题目序号起
+
+3.3 浏览试卷 获取章节下的题目 需要token
+请求地址:https://houtai.sdyh.top/api/get_topics?subject_id=1&sec=1&skip=0&take=50
+请求参数:subject_id 科目id(必须要) sec 章节序号(必须要) 
+新添加:skip 跳过多少条不传默认是0(选传) take 取出多少条不传默认是50(选传)
+返回参数:成功数据
+
+3.3 根据选择科目后自动组卷 需要token
+请求地址:https://houtai.sdyh.top/api/auto_group_topics/{subject_id}
+请求参数:subject_id 科目id(必须要) 
+返回参数:成功数据
+
+4.购买套餐 都需要token
+[#新更新]4.1 发起套餐购买[微信]
+请求地址:https://houtai.sdyh.top/api/buy_package
+请求参数:'package_id' 套餐id (必须要) pay_type(必须要) 微信/支付宝
+返回参数:成功数据返回支付参数
+
+5.考试及记录接口 都需要token
+
+5.1 提交试卷
+请求地址:https://houtai.sdyh.top/api/submit_paper
+请求参数:'subject_id'科目id 'result' 测试结果 'detail'题目答案格式(全部转成字符串):[{"result":1,"topic_id":1,"correct":1},{"result":2,"topic_id":2,"correct":0}](其中result是答题选中的序号,选A是1 B是2,topic_id题目id,correct 1是正确 0是错误)
+返回参数:成功提示
+
+5.2 习题重温
+[#新更新]5.2.1 查看对应职位下的考试记录
+请求地址:https://houtai.sdyh.top/api/get_job_test_log/{job_id}
+请求参数:job_id(必须要) 职位id 传0或者null获取所有的 skip,take 选传 
+返回参数:成功数据
+
+[#新更新]5.2.2 根据考试记录id查到习题详情状况
+请求地址:https://houtai.sdyh.top/api/get_topic_by_exam_id/{exam_id}
+请求参数:exam_id(必须要) 考试id
+返回参数:成功数据 参数和5.1一致 新加topic题目和selections选项
+
+[#新更新] 根据关键字搜索题目带选项
+请求地址:https://houtai.sdyh.top/api/search_topics
+请求参数:query(搜索关键字)
+返回参数:成功数据(题目列表带上选项)
+
+[#新更新] 图片上传
+请求地址:https://houtai.sdyh.top/api/uploads
+请求参数:file
+请求方法:POST其他均为GET
+返回参数:成功数据(图片链接等)
+
+[#新更新] 提交反馈信息
+请求地址:https://houtai.sdyh.top/api/submit_feedback
+请求参数:必填:content(问题意见描述) grade(评分1-5) 选填:question_img(问题图),
+        commit(联系方式),
+返回参数:成功数据(成功提示)
+
+[#新更新] 获取纠错类型列表
+请求地址:https://houtai.sdyh.top/api/get_errors
+请求参数:无
+返回参数:成功数据(纠错类型列表)
+
+[#新更新] 提交纠错信息
+请求地址:https://houtai.sdyh.top/api/submit_topic_mistake
+请求参数:必填:topic_id(题目id),question_type(纠错类型),content(问题意见描述) 选填:question_img(问题图),commit(联系方式),
+返回参数:成功数据(成功提示)
+
+[#新更新] 获取题目总量
+请求地址:https://houtai.sdyh.top/api/get_topics_sum
+请求参数:必填:subject_id 科目id(必须要) sec 章节序号(必须要)
+返回参数:成功数据(对应题目总数量)
+
+[#新更新] 浏览试卷 获取章节下的题目根据题目序号 需要token
+请求地址:https://houtai.sdyh.top/api/get_sort_topic?subject_id=1&sec=1&sort=1
+请求参数:subject_id 科目id(必须要) sec 章节序号(必须要) 
+新添加:sort题目序号(必须要)
+返回参数:成功数据
+
+
+#备注题目新特性(只针对轮机英语的听力题目)
+group 默认是0 0的话是普通题目 一个组的group都相等
+group_type 组类型0普通题1首个组题2普通组题
+topic_type 枚举类型 默认为普通题 听力三个可选 单句听力题 对话听力题  短文听力题
+attach_sound_url 问题/对话/短文音频地址 
+selection_sound_url 选项音频地址
+question 问题内容
+union_type 听力可选类型 0普通1题干显示 问题显示（对话和短文有问题，单句只有题干） 选项显示（单句、对话、短文都显示）
+2题干隐藏 问题隐藏 选项隐藏（单句的选项隐藏，对话和短文的选项显示）——甲类无限航区
+3题干隐藏 问题显示（对话和短文的问题也显示） 选项显示（单句、对话和短文的选项都显示）————丙类沿海航区
+
